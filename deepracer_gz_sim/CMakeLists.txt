@@ -24,3 +24,12 @@ if(BUILD_TESTING)
 endif()
 
 ament_package()
+
+install(DIRECTORY include/
+        DESTINATION include)
+
+install(TARGETS
+        gazebo_ros_deepracer_drive
+      ARCHIVE DESTINATION lib
+      LIBRARY DESTINATION lib
+      RUNTIME DESTINATION bin)
