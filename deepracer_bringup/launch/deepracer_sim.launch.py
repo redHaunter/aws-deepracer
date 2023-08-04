@@ -19,7 +19,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 import launch
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 def generate_launch_description():
@@ -27,6 +27,14 @@ def generate_launch_description():
 
     # ros gazebo launcher
     gazebo_dir = get_package_share_directory('gazebo_ros')
+    # gazebo_server_launcher = ExecuteProcess(
+    #     cmd=['gzserver', '-e', 'ode'],
+    #     output='screen'
+    # )
+    # gazebo_client_launcher = ExecuteProcess(
+    #     cmd=['gzclient'],
+    #     output='screen'
+    # )
     gazebo_server_launcher = IncludeLaunchDescription(
         launch_description_source=PythonLaunchDescriptionSource(
             launch_file_path=gazebo_dir + '/launch/gzserver.launch.py'),

@@ -36,7 +36,7 @@ set(dependencies
   tf2
 )
 
-install(DIRECTORY launch config map
+install(DIRECTORY launch config maps models worlds
   DESTINATION share/${PROJECT_NAME}
 )
 
