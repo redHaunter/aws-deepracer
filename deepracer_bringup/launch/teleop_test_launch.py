@@ -49,37 +49,37 @@ def generate_launch_description():
                         output='screen')
     # controllers
     load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'joint_state_controller'],
         output='screen'
     )
     load_left_rear_wheel_velocity_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'left_rear_wheel_velocity_controller'],
         output='screen'
     )
     load_right_rear_wheel_velocity_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'right_rear_wheel_velocity_controller'],
         output='screen'
     )
     load_left_front_wheel_velocity_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'left_front_wheel_velocity_controller'],
         output='screen'
     )
     load_right_front_wheel_velocity_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'right_front_wheel_velocity_controller'],
         output='screen'
     )
     load_left_steering_hinge_position_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'left_steering_hinge_position_controller'],
         output='screen'
     )
     load_right_steering_hinge_position_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
              'right_steering_hinge_position_controller'],
         output='screen'
     )

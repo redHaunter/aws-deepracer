@@ -110,6 +110,24 @@ def generate_launch_description():
             package='tf2_ros',
             executable='static_transform_publisher',
             output='screen',
+            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'odom'],
+            parameters=[
+                deepracer_bringup_dir + '/config/static_tf.yaml'
+            ]
+            ),
+        launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='screen',
+            arguments=['0', '0', '0', '0', '0', '0', 'base_link', 'map'],
+            parameters=[
+                deepracer_bringup_dir + '/config/static_tf.yaml'
+            ]
+            ),
+        launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='screen',
             arguments=['0.02913', '0', '0.884699', '0', '0', '3.1416', 'base_link', 'laser'],
             parameters=[
                 deepracer_bringup_dir + '/config/static_tf_sim.yaml'

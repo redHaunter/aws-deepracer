@@ -52,7 +52,8 @@ def generate_launch_description():
             os.path.join(deepracer_bringup_dir, 'launch', 'deepracer_spawn.launch.py'))
     )
 
-    return LaunchDescription([DeclareLaunchArgument(
+    return LaunchDescription([
+        DeclareLaunchArgument(
           'world',
           description='SDF world file'),
         DeclareLaunchArgument(
