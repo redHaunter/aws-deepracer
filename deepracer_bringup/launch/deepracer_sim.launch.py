@@ -27,14 +27,6 @@ def generate_launch_description():
 
     # ros gazebo launcher
     gazebo_dir = get_package_share_directory('gazebo_ros')
-    # gazebo_server_launcher = ExecuteProcess(
-    #     cmd=['gzserver', '-e', 'ode'],
-    #     output='screen'
-    # )
-    # gazebo_client_launcher = ExecuteProcess(
-    #     cmd=['gzclient'],
-    #     output='screen'
-    # )
     gazebo_server_launcher = IncludeLaunchDescription(
         launch_description_source=PythonLaunchDescriptionSource(
             launch_file_path=gazebo_dir + '/launch/gzserver.launch.py'),
@@ -52,8 +44,7 @@ def generate_launch_description():
             os.path.join(deepracer_bringup_dir, 'launch', 'deepracer_spawn.launch.py'))
     )
 
-    return LaunchDescription([
-        DeclareLaunchArgument(
+    return LaunchDescription([DeclareLaunchArgument(
           'world',
           description='SDF world file'),
         DeclareLaunchArgument(
