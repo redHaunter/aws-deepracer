@@ -26,9 +26,18 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     deepracer_bringup_dir = get_package_share_directory('deepracer_bringup')
     nav2_bringup_dir = get_package_share_directory('nav2_bringup')
-    bookstore_world = os.path.join('worlds', 'bookstore.world')
-    bookstore_map = os.path.join(deepracer_bringup_dir, 'maps', 'turtlebot3_waffle_pi', 'map.yaml')
+    # bookstore_path = get_package_share_directory('aws_robomaker_bookstore_world')
+    # bookstore_world = os.path.join(bookstore_path, 'worlds', 'bookstore.world')
+    # bookstore_map = os.path.join(bookstore_path, 'maps', 'turtlebot3_waffle_pi', 'map.yaml')
+    bookstore_world = os.path.join('/home/redha/ros2_ws/install/aws_robomaker_bookstore_world/share/aws_robomaker_bookstore_world', 'worlds', 'bookstore.world')
+    bookstore_map = os.path.join('/home/redha/ros2_ws/install/aws_robomaker_bookstore_world/share/aws_robomaker_bookstore_world', 'maps', 'turtlebot3_waffle_pi', 'map.yaml')
     nav_params = os.path.join(deepracer_bringup_dir, 'config', 'nav2_params_nav_amcl_sim_demo.yaml')
+
+    # deepracer_bringup_dir = get_package_share_directory('deepracer_bringup')
+    # nav2_bringup_dir = get_package_share_directory('nav2_bringup')
+    # bookstore_world = os.path.join('worlds', 'bookstore.world')
+    # bookstore_map = os.path.join(deepracer_bringup_dir, 'maps', 'turtlebot3_waffle_pi', 'map.yaml')
+    # nav_params = os.path.join(deepracer_bringup_dir, 'config', 'nav2_params_nav_amcl_sim_demo.yaml')
  
     world_cfg = LaunchConfiguration('world')
     map_cfg = LaunchConfiguration('map')

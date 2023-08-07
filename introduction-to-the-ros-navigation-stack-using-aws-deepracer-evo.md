@@ -196,7 +196,7 @@ rviz2
 
 2. Open the `nav2_default_view.rviz` file from the [deepracer_description](https://github.com/aws-deepracer/aws-deepracer/tree/main/deepracer_description) package. In the rviz window you should now see the bird's-eye view of the robot's location. 
 3. Set the initial robot location by choosing the *2D Pose Estimate* tool from the toolbar.
-4. Place the arrow pointing up from the robot's location. The robot footprint should now appear as a green square, and the map should appear highlighted in color. This means that the AWS DeepRacer is now ready to navigate! 
+4. Place the arrow pointing up from the robot's location. The robot footprint should now appear as a green square, and the map should appear highlighted in color. This means that the AWS DeepRacer is now ready to navigate!
 5. If you have a middle mouse scroll, use it to zoom out and get a view of the entire map. 
 6. Use the *Navigation2 Goal* button on the tool bar to set a goal for the AWS DeepRacer to move forward in the map. The AWS DeepRacer should immediately begin moving to the location you select.
 
