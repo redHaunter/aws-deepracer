@@ -285,31 +285,44 @@ cd ~/deepracer_nav2_ws/aws-deepracer/ && colcon build --packages-select deeprace
 2.1.7.1 - Launch the AWS DeepRacer robot related packages (See Part 2.2):
 
 ```
+rosdomain
+systemctl stop deepracer-core.service
 source /opt/ros/foxy/setup.bash 
-source ~/deepracer_nav2_ws/aws-deepracer/install/setup.bash
+source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
 ros2 launch deepracer_bringup deepracer.launch.py
 ```
 
 2.1.7.2 - Launch the ROS Navigation packages:
 
 ```
+rosdomain
 source /opt/ros/foxy/setup.bash
-source ~/deepracer_nav2_ws/aws-deepracer/install/setup.bash
-ros2 launch deepracer_bringup deepracer_navigation_dr.launch.py use_sim_time:=False params_file:=/root/deepracer_nav2_ws/aws-deepracer/deepracer_bringup/config/nav2_slam_params.yaml
+source /home/deepracer/ws/install/setup.bash
+source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
+ros2 launch deepracer_bringup deepracer_navigation_dr.launch.py use_sim_time:=False params_file:=/home/deepracer/deepracer_nav2_ws/aws-deepracer/deepracer_bringup/config/nav2_slam_params.yaml
 ```
 
 2.1.7.3 - Launch the SLAM toolbox:
 
 ```
+rosdomain
 source /opt/ros/foxy/setup.bash
-source ~/deepracer_nav2_ws/aws-deepracer/install/setup.bash
-ros2 launch deepracer_bringup slam_toolbox.launch.py use_sim_time:=False params_file:=/root/deepracer_nav2_ws/deepracer/deepracer_bringup/config/slam_toolbox.yaml
+source /home/deepracer/ws/install/setup.bash
+source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
+ros2 launch deepracer_bringup slam_toolbox.launch.py use_sim_time:=False params_file:=/home/deepracer/deepracer_nav2_ws/deepracer/deepracer_bringup/config/slam_toolbox.yaml
 ```
 
 2.1.7.4 - Create and save the map:
-Using your favorite tele-op method (Example: [https://github.com/ros2/teleop_twist_keyboard](https://github.com/ros2/teleop_twist_keyboard)), move the AWS DeepRacer around the required space smoothly and slowly. You can view the map in RViz. To save this map to file:
+Using your favorite tele-op
+
+rosdomain
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+ method (Example: [https://github.com/ros2/teleop_twist_keyboard](https://github.com/ros2/teleop_twist_keyboard)), move the AWS DeepRacer around the required space smoothly and slowly. You can view the map in RViz. To save this map to file:
 
 ```
+source /opt/ros/foxy/setup.bash
+source /home/deepracer/ws/install/setup.bash
 ros2 run nav2_map_server map_saver_cli -f ~/map
 ```
 
@@ -326,8 +339,10 @@ As part of this section, we launch the nodes required for the AWS DeepRacer to b
 **2.2.1 - Launch using the AWS DeepRacer launcher provided**
 
 ```
+rosdomain
+systemctl stop deepracer-core.service
 source /opt/ros/foxy/setup.bash 
-source ~/deepracer_nav2_ws/aws-deepracer/install/setup.bash
+source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
 ros2 launch deepracer_bringup deepracer.launch.py
 ```
 
@@ -336,8 +351,11 @@ ros2 launch deepracer_bringup deepracer.launch.py
 As part of this section, we shall launch the Navigation stack using the nav_bringup we have installed as a prerequisite in 2.1.1. A well defined map is passed as a parameter for static localization and navigation plugin configurations are passed in the `nav2_params_nav_amcl_dr_demo.yaml` in deepracer_bringup.
 
 ```
+rosdomain
 source /opt/ros/foxy/setup.bash 
-ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=<Path to Map> params_file:=<Path to YAML Config>
+source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
+source /home/deepracer/ws/install/setup.bash
+ros2 launch nav2_bringup bringup_launch.py use_sim_time:=False autostart:=True map:=/home/deepracer/map.yaml params_file:=/home/deepracer/deepracer_nav2_ws/aws-deepracer/deepracer_bringup/config/nav2_params_nav_amcl_dr_demo.yaml
 ```
 
 ### **Part 2.4 — Visualize the robot in RViz**
