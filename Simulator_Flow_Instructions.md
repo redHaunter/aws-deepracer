@@ -1,4 +1,4 @@
-# simulator
+# Simulator
 
 ### This instruction explains how to simulate your aws-deepracer model in gazebo-classic in order to see robot actions and moves in a pre-mapped world.
   
