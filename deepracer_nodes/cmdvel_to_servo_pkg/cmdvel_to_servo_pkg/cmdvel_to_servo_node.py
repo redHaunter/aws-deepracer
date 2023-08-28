@@ -217,7 +217,10 @@ class CmdvelToServoNode(Node):
         target_linear_clamped = max(min(self.target_linear, constants.VehicleNav2Dynamics.MAX_SPEED),
                                             constants.VehicleNav2Dynamics.MIN_SPEED)
         # Get the throttle values mapped wrt DeepRacer servo.
-        target_throttle_mapped = self.get_mapped_throttle(target_linear_clamped)
+        #target_throttle_mapped = self.get_mapped_throttle(target_linear_clamped)
+        target_throttle_mapped = 6 * abs(target_linear_clamped)
+        if target_throttle_mapped > 2.5:
+          target_throttle_mapped = 2.5
         # Set the direction.
         target_throttle_signed = target_throttle_mapped * math.copysign(1.0, self.target_linear)
         # Get rescaled throttle.
@@ -226,7 +229,10 @@ class CmdvelToServoNode(Node):
         target_rot_clamped = max(min(self.target_rot, constants.VehicleNav2Dynamics.MAX_STEER),
                                         constants.VehicleNav2Dynamics.MIN_STEER)
         # Get the steering angle mapped wrt DeepRacer servo.
-        target_steering_mapped = self.get_mapped_steering(target_rot_clamped)
+        #target_steering_mapped = self.get_mapped_steering(target_rot_clamped)
+        target_steering_mapped = abs(target_rot_clamped) * 3
+        if target_steering_mapped > 0.66:
+          target_steering_mapped = 0.66
         # Set the direction.
         steering = target_steering_mapped * math.copysign(1.0, self.target_rot) * math.copysign(1.0, self.target_linear)
         return steering, throttle

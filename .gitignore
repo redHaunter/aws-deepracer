@@ -1,2 +1,5 @@
 .vscode
 deepracer_nodes/rf2o_laser_odometry
+build
+install
+log
