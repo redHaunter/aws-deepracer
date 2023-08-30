@@ -106,6 +106,15 @@ def generate_launch_description():
                 deepracer_bringup_dir + '/config/static_tf.yaml'
             ]
             ),
+            launch_ros.actions.Node(
+                package='tf2_ros',
+                executable='static_transform_publisher',
+                output='screen',
+                arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom'],
+                parameters=[
+                deepracer_bringup_dir  +  '/config/static_tf.yaml'
+                ]
+            ),
         launch_ros.actions.Node(
             package='tf2_ros',
             executable='static_transform_publisher',
