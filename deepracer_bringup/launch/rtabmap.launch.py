@@ -9,9 +9,21 @@ def generate_launch_description():
     stereo_image_proc_launcher = IncludeLaunchDescription(
     launch_description_source=PythonLaunchDescriptionSource(
         launch_file_path=stereo_image_proc_dir + '/launch/stereo_image_proc.launch.py'),
-        launch_arguments={'left_namespace': 'zed_camera_left_sensor',
-                            'right_namespace': 'zed_camera_right_sensor'}.items())
+        launch_arguments={'left_namespace': '/zed_camera/left',
+                            'right_namespace': '/zed_camera/right'}.items())
+    rtabmap_dir = get_package_share_directory('rtabmap_launch')
+    rtabmap_launcher = IncludeLaunchDescription(
+    launch_description_source=PythonLaunchDescriptionSource(
+        launch_file_path=rtabmap_dir + '/launch/rtabmap.launch.py'),
+        launch_arguments={'use_sim_time': 'true',
+                          'depth': 'true',
+                          'stereo': 'true',
+                          'rtabmapviz': 'false',
+                          'stereo_namespace': 'zed_camera'
+                          }.items())
+    
     
     return LaunchDescription([
-        stereo_image_proc_launcher
+        stereo_image_proc_launcher,
+        rtabmap_launcher
     ])

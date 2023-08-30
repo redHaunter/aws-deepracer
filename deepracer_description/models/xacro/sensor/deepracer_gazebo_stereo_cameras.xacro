@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <robot name="agent" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <gazebo reference="camera_link_leftcam">
-    <sensor type="camera" name="zed_camera_left_sensor">
+    <sensor type="camera" name="zed_camera/left">
       <pose>0 0 0 0 0 0</pose>
       <update_rate>15.0</update_rate>
       <camera name="zed_camera_left_camera">
@@ -49,7 +49,7 @@ limitations under the License.
   </gazebo>
 
   <gazebo reference="camera_link_rightcam">
-    <sensor type="camera" name="zed_camera_right_sensor">
+    <sensor type="camera" name="zed_camera/right">
       <pose>0 0 0 0 0 0</pose>
       <update_rate>15.0</update_rate>
       <camera name="zed_camera_right_camera">
