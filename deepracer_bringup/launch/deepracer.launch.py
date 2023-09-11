@@ -55,7 +55,7 @@ def generate_launch_description():
             package='rplidar_ros',
             namespace='',
             executable='rplidar_node',
-            name='rplidar_scan_publisher',
+            name='rplidar_node',
             parameters=[{
                     'serial_port': '/dev/ttyUSB0',
                     'serial_baudrate': 115200,

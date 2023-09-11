@@ -47,7 +47,8 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
           'world',
-          description='SDF world file'),
+          description='SDF world file',
+          default_value='/home/redha/ros2_ws/src/aws-robomaker-bookstore-world/worlds/bookstore.world'),
         DeclareLaunchArgument(
             name='gui',
             default_value='true'
