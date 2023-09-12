@@ -12,16 +12,17 @@ def generate_launch_description():
             "use_sim_time": True,
             "subscribe_stereo": True,
             "subscribe_depth": False,
-            "frame_id": "base_link",
-            "approx_sync": False,
+            "frame_id": "camera_link",
+            "approx_sync": True,
             "queue_size": 30,
-            "Odom/MinInliers": 12,
-            "Odom/RoiRatios": "0.03 0.03 0.04 0.04",
+            # "icp_odometry": True,
+            # "visual_odometry": True,
+            # "Grid/FromDepth": True,
         }
     ]
     remmapings = [
-        ("right/image_rect", "/zed_camera/right/image_rect"),
-        ("left/image_rect", "/zed_camera/left/image_rect"),
+        ("right/image_rect", "/zed_camera/right/image_rect_color"),
+        ("left/image_rect", "/zed_camera/left/image_rect_color"),
         ("right/camera_info", "/zed_camera/right/camera_info"),
         ("left/camera_info", "/zed_camera/left/camera_info"),
     ]
@@ -32,6 +33,7 @@ def generate_launch_description():
             + "/launch/stereo_image_proc.launch.py"
         ),
         launch_arguments={
+            "approximate_sync": "True",
             "left_namespace": "/zed_camera/left",
             "right_namespace": "/zed_camera/right",
         }.items(),
