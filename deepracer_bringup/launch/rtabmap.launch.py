@@ -12,15 +12,41 @@ def generate_launch_description():
             "use_sim_time": True,
             "subscribe_stereo": True,
             "subscribe_depth": False,
-            "frame_id": "camera_link",
+            "frame_id": "base_link",
+            "odom_frame_id": "odom",
             "approx_sync": True,
-            "queue_size": 30,
-            # "icp_odometry": True,
-            # "visual_odometry": True,
-            # "Grid/FromDepth": True,
+            "queue_size": 200,
         }
     ]
-    remmapings = [
+    odom_params = [
+        {
+            "use_sim_time": True,
+            "subscribe_stereo": True,
+            "subscribe_depth": False,
+            "frame_id": "camera_link",
+            "odom_frame_id": "odom",
+            "approx_sync": True,
+            "Vis/MinInliers": "10",
+            "OdomF2M/BundleAdjustment": "0",
+            "OdomF2M/MaxSize": "1000",
+            "GFTT/MinDistance": "10",
+            "GFTT/QualityLevel": "0.00001",
+        }
+    ]
+    stereo_sync_remmapings = [
+        ("right/image_rect", "/zed_camera/right/image_rect"),
+        ("left/image_rect", "/zed_camera/left/image_rect_color"),
+        ("right/camera_info", "/zed_camera/right/camera_info"),
+        ("left/camera_info", "/zed_camera/left/camera_info"),
+    ]
+    odometry_remmapings = [
+        ("right/image_rect", "/zed_camera/right/image_rect"),
+        ("left/image_rect", "/zed_camera/left/image_rect"),
+        ("right/camera_info", "/zed_camera/right/camera_info"),
+        ("left/camera_info", "/zed_camera/left/camera_info"),
+    ]
+    # -r right/image_rect:=/zed_camera/right/image_rect -r left/image_rect:=/zed_camera/left/image_rect -r right/camera_info:=/zed_camera/right/camera_info -r left/camera_info:=/zed_camera/left/camera_info
+    slam_remmapings = [
         ("right/image_rect", "/zed_camera/right/image_rect_color"),
         ("left/image_rect", "/zed_camera/left/image_rect_color"),
         ("right/camera_info", "/zed_camera/right/camera_info"),
@@ -41,28 +67,73 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='screen',
+            arguments=['0', '0', '0', '-1.5707963267948966', '0', '-1.5707963267948966', 'base_link', 'camera_link'],
+            ),
             stereo_image_proc_launcher,
-            launch_ros.actions.Node(
-                package="rtabmap_odom",
-                executable="stereo_odometry",
-                output="screen",
-                parameters=parameters,
-                remappings=remmapings,
-            ),
-            launch_ros.actions.Node(
-                package="rtabmap_slam",
-                executable="rtabmap",
-                output="screen",
-                arguments=["-d"],
-                parameters=parameters,
-                remappings=remmapings,
-            ),
-            launch_ros.actions.Node(
-                package="rtabmap_viz",
-                executable="rtabmap_viz",
-                output="screen",
-                parameters=parameters,
-                remappings=remmapings,
-            ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_sync",
+            #     executable="stereo_sync",
+            #     output="screen",
+            #     arguments=["standalone", "rtabmap_sync/stereo_sync"],
+            #     remappings=stereo_sync_remmapings,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_odom",
+            #     executable="stereo_odometry",
+            #     output="screen",
+            #     # parameters=odom_params,
+            #     arguments=[
+            #         "--ros-args",
+            #         "-p",
+            #         "use_sim_time:=true",
+            #         "-p",
+            #         "subscribe_stereo:=true",
+            #         "-p",
+            #         "subscribe_depth:=false",
+            #         "-p",
+            #         "frame_id:=camera_link",
+            #         "-p",
+            #         "queue_size:=30",
+            #         "-p",
+            #         "odom_frame_id:=odom",
+            #         "-p",
+            #         "approx_sync:=true",
+            #         "-r",
+            #         "right/image_rect:=/zed_camera/right/image_rect",
+            #         "-r",
+            #         "left/image_rect:=/zed_camera/left/image_rect",
+            #         "-r",
+            #         "right/camera_info:=/zed_camera/right/camera_info",
+            #         "-r",
+            #         "left/camera_info:=/zed_camera/left/camera_info",
+            #     ],
+            #     # remappings=odometry_remmapings,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_slam",
+            #     executable="rtabmap",
+            #     output="screen",
+            #     arguments=[
+            #         "-d",
+            #         "--Vis/CorFlowMaxLevel",
+            #         "5",
+            #         "--Stereo/MaxDisparity 200",
+            #     ],
+            #     parameters=parameters,
+            #     remappings=slam_remmapings,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_viz",
+            #     executable="rtabmap_viz",
+            #     output="screen",
+            #     parameters=parameters,
+            #     remappings=slam_remmapings,
+            # ),
         ]
     )
+
+
