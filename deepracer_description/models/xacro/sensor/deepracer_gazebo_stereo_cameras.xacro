@@ -109,7 +109,7 @@ limitations under the License.
           <remapping>image_raw:=rgb/image_rect_color</remapping>
           <remapping>camera_info:=rgb/camera_info</remapping>
         </ros>
-        <frameName>camera_link</frameName>
+        <frame_name>camera_link</frame_name>
         <hack_baseline>0.12</hack_baseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -144,7 +144,7 @@ limitations under the License.
           <remapping>image_raw:=rgb/image_rect_color_right</remapping>
           <remapping>camera_info:=rgb/camera_info_right</remapping>
         </ros>
-        <frameName>camera_link_right</frameName>
+        <frame_name>camera_link</frame_name>
         <hack_baseline>0.12</hack_baseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>

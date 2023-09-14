@@ -4,20 +4,20 @@ camera_name: zed_camera/left
 camera_matrix:
   rows: 3
   cols: 3
-  data: [504.78216005824515, 0, 320.5, 0, 504.78216005824515, 240.5, 0, 0, 1]
+  data: [504.78216005824515, 0., 320.5, 0., 504.78216005824515, 240.5, 0., 0., 1.]
 distortion_model: plumb_bob
 distortion_coefficients:
   rows: 1
   cols: 5
-  data: [0, 0, 0, 0, 0]
+  data: [0., 0., 0., 0., 0.]
 rectification_matrix:
   rows: 3
   cols: 3
-  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+  data: [1., 0., 0., 0., 1., 0., 0., 0., 1.]
 projection_matrix:
   rows: 3
   cols: 4
-  data: [4827.94, 0, 1223.5, 0, 0, 4835.62, 1024.5, 0, 0, 0, 1, 0]
+  data: [4827.94, 0., 1223.5, 0., 0., 4835.62, 1024.5, 0., 0., 0., 1., 0.]
 
 
 #   header:
