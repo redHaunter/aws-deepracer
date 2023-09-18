@@ -85,21 +85,21 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            launch_ros.actions.Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                output="screen",
-                arguments=[
-                    "0",
-                    "0",
-                    "0",
-                    "-1.5707963267948966",
-                    "0",
-                    "-1.5707963267948966",
-                    "base_link",
-                    "camera_link",
-                ],
-            ),
+            # launch_ros.actions.Node(
+            #     package="tf2_ros",
+            #     executable="static_transform_publisher",
+            #     output="screen",
+            #     arguments=[
+            #         "0",
+            #         "0",
+            #         "0",
+            #         "-1.5707963267948966",
+            #         "0",
+            #         "-1.5707963267948966",
+            #         "base_link",
+            #         "camera_link",
+            #     ],
+            # ),
             stereo_image_proc_launcher,
             launch_ros.actions.Node(
                 package="rtabmap_util",

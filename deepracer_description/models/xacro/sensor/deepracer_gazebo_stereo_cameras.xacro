@@ -103,7 +103,7 @@ limitations under the License.
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <always_on>true</always_on>
-        <updateRate>60</updateRate>
+        <update_rate>60</update_rate>
         <camera_name>zed_camera/left</camera_name>
         <ros>
           <remapping>image_raw:=rgb/image_rect_color</remapping>
@@ -138,7 +138,7 @@ limitations under the License.
       </camera>
       <plugin name="camera_controller_right" filename="libgazebo_ros_camera.so">
         <always_on>true</always_on>
-        <updateRate>60</updateRate>
+        <update_rate>60</update_rate>
         <camera_name>zed_camera/right</camera_name>
         <ros>
           <remapping>image_raw:=rgb/image_rect_color_right</remapping>
