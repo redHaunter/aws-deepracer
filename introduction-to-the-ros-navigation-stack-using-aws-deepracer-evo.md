@@ -285,8 +285,8 @@ cd ~/deepracer_nav2_ws/aws-deepracer/ && colcon build --packages-select deeprace
 2.1.7.1 - Launch the AWS DeepRacer robot related packages (See Part 2.2):
 
 ```
-rosdomain
 systemctl stop deepracer-core.service
+rosdomain
 source /opt/ros/foxy/setup.bash 
 source /home/deepracer/deepracer_nav2_ws/aws-deepracer/install/setup.bash
 ros2 launch deepracer_bringup deepracer.launch.py

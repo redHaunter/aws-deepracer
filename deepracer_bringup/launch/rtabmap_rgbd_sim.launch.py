@@ -41,18 +41,18 @@ def generate_launch_description():
         }
     ]
     rgbd_sync_remmapings = [
-        ("rgb/image", "/camera_pkg/left/image_rect_color"),
+        ("rgb/image", "/zed_camera/left/image_rect_color"),
         ("depth/image", "/image_raw"),
-        ("rgb/camera_info", "/camera_pkg/left/camera_info"),
+        ("rgb/camera_info", "/zed_camera/left/camera_info"),
     ]
     depth_remmapings = [
         ("cloud", "/points2"),
-        ("camera_info", "/camera_pkg/left/camera_info"),
+        ("camera_info", "/zed_camera/left/camera_info"),
     ]
     odom_remmapings = [
-        ("rgb/image", "/camera_pkg/left/image_rect_color"),
+        ("rgb/image", "/zed_camera/left/image_rect_color"),
         ("depth/image", "/image_raw"),
-        ("rgb/camera_info", "/camera_pkg/left/camera_info"),
+        ("rgb/camera_info", "/zed_camera/left/camera_info"),
     ]
     
     stereo_image_proc_dir = get_package_share_directory("stereo_image_proc")
@@ -62,8 +62,8 @@ def generate_launch_description():
             + "/launch/stereo_image_proc.launch.py"
         ),
         launch_arguments={
-            "left_namespace": "/camera_pkg/left",
-            "right_namespace": "/camera_pkg/right",
+            "left_namespace": "/zed_camera/left",
+            "right_namespace": "/zed_camera/right",
             "target_frame_id": "/camera_link",
             # "disparity_range": "32",
             # "speckle_size": "1000",
@@ -72,11 +72,6 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            launch_ros.actions.Node(
-                package="decompressor",
-                executable="decompression_node",
-                output="screen",
-            ),
             stereo_image_proc_launcher,
             launch_ros.actions.Node(
                 package="rtabmap_util",
@@ -85,34 +80,34 @@ def generate_launch_description():
                 parameters=depth_params,
                 remappings=depth_remmapings,
             ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_sync",
-            #     executable="rgbd_sync",
-            #     output="screen",
-            #     parameters=[{"approx_sync": True}],
-            #     remappings=rgbd_sync_remmapings,
-            # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_odom",
-            #     executable="rgbd_odometry",
-            #     output="screen",
-            #     parameters=odom_params,
-            #     remappings=odom_remmapings,
-            # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_slam",
-            #     executable="rtabmap",
-            #     output="screen",
-            #     arguments=[
-            #         "--delete_db_on_start",
-            #     ],
-            #     parameters=slam_parameters,
-            # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_viz",
-            #     executable="rtabmap_viz",
-            #     output="screen",
-            #     parameters=slam_parameters,
-            # ),
+            launch_ros.actions.Node(
+                package="rtabmap_sync",
+                executable="rgbd_sync",
+                output="screen",
+                parameters=[{"approx_sync": True}],
+                remappings=rgbd_sync_remmapings,
+            ),
+            launch_ros.actions.Node(
+                package="rtabmap_odom",
+                executable="rgbd_odometry",
+                output="screen",
+                parameters=odom_params,
+                remappings=odom_remmapings,
+            ),
+            launch_ros.actions.Node(
+                package="rtabmap_slam",
+                executable="rtabmap",
+                output="screen",
+                arguments=[
+                    "--delete_db_on_start",
+                ],
+                parameters=slam_parameters,
+            ),
+            launch_ros.actions.Node(
+                package="rtabmap_viz",
+                executable="rtabmap_viz",
+                output="screen",
+                parameters=slam_parameters,
+            ),
         ]
     )
