@@ -9,26 +9,25 @@ import launch_ros.actions
 def generate_launch_description():
     slam_parameters = [
         {
-            "use_sim_time": True,
+            "use_sim_time": False,
             "frame_id": "base_link",
             "subscribe_depth": False,
             "subscribe_rgbd": True,
             # "subscribe_scan": True,
             "RGBD/AngularUpdate": "0.01",
             "RGBD/LinearUpdate": "0.01",
-            "RGBD/OptimizeFromGraphEnd": "false",
-            "Grid/FlatObstacleDetected": "false",
+            # "RGBD/OptimizeFromGraphEnd": "false",
+            # "Grid/FlatObstacleDetected": "false",
             # "Grid/FootprintHeight": "0.1",
             # "Grid/MapFrameProjection": "true", 
             # "Grid/MaxGroundAngle": "6", # is this even working?
-            "GridGlobal/FullUpdate": "false",
-            "Icp/Iterations": "150",
+            # "GridGlobal/FullUpdate": "false",
+            # "Icp/Iterations": "150",
 
         }
     ]
     depth_params = [
         {
-
             "fixed_frame_id": "odom",
         }
     ]
@@ -38,6 +37,11 @@ def generate_launch_description():
             "subscribe_rgbd": True,
             "subscribe_depth": False,
             "approx_sync": True,
+        }
+    ]
+    stereo_parameters = [
+        {
+            "use_sim_time": False,
         }
     ]
     rgbd_sync_remmapings = [
@@ -54,7 +58,28 @@ def generate_launch_description():
         ("depth/image", "/image_raw"),
         ("rgb/camera_info", "/camera_pkg/left/camera_info"),
     ]
-    
+    stereo_remmapings = [
+        ("right/image_rect", "/camera_pkg/right/image_raw"),
+        ("left/image_rect", "/camera_pkg/left/image_raw"),
+        ("right/camera_info", "/camera_pkg/right/camera_info"),
+        ("left/camera_info", "/camera_pkg/left/camera_info"),
+    ]
+    domain_bridge_dir = get_package_share_directory("domain_bridge")
+    domain_bridge_launcher = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource(
+            launch_file_path=domain_bridge_dir
+            + "/launch/stereo_image_proc.launch.py"
+        ),
+        launch_arguments={
+            "approximate_sync": "False",
+            "left_namespace": "/camera_pkg/left",
+            "right_namespace": "/camera_pkg/right",
+            "target_frame_id": "/camera_link",
+            # "disparity_range": "32",
+            "speckle_size": "1000",
+        }.items(),
+    )
+
     stereo_image_proc_dir = get_package_share_directory("stereo_image_proc")
     stereo_image_proc_launcher = IncludeLaunchDescription(
         launch_description_source=PythonLaunchDescriptionSource(
@@ -62,6 +87,7 @@ def generate_launch_description():
             + "/launch/stereo_image_proc.launch.py"
         ),
         launch_arguments={
+            "approximate_sync": "False",
             "left_namespace": "/camera_pkg/left",
             "right_namespace": "/camera_pkg/right",
             "target_frame_id": "/camera_link",
@@ -73,18 +99,33 @@ def generate_launch_description():
     return LaunchDescription(
         [
             launch_ros.actions.Node(
+                package="domain_bridge",
+                executable="domain_bridge",
+                output="screen",
+                arguments=[
+                    "/home/redha/ros2_ws/src/domain_bridge/examples/example_bridge_config.yaml",
+                ],
+            ),
+            launch_ros.actions.Node(
                 package="decompressor",
                 executable="decompression_node",
                 output="screen",
             ),
-            stereo_image_proc_launcher,
+            # stereo_image_proc_launcher,
             launch_ros.actions.Node(
-                package="rtabmap_util",
-                executable="pointcloud_to_depthimage",
+                package="rtabmap_sync",
+                executable="stereo_sync",
                 output="screen",
-                parameters=depth_params,
-                remappings=depth_remmapings,
+                parameters=stereo_parameters,
+                remappings=stereo_remmapings,
             ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_util",
+            #     executable="pointcloud_to_depthimage",
+            #     output="screen",
+            #     parameters=depth_params,
+            #     remappings=depth_remmapings,
+            # ),
             # launch_ros.actions.Node(
             #     package="rtabmap_sync",
             #     executable="rgbd_sync",
@@ -99,20 +140,20 @@ def generate_launch_description():
             #     parameters=odom_params,
             #     remappings=odom_remmapings,
             # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_slam",
-            #     executable="rtabmap",
-            #     output="screen",
-            #     arguments=[
-            #         "--delete_db_on_start",
-            #     ],
-            #     parameters=slam_parameters,
-            # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_viz",
-            #     executable="rtabmap_viz",
-            #     output="screen",
-            #     parameters=slam_parameters,
-            # ),
+            launch_ros.actions.Node(
+                package="rtabmap_slam",
+                executable="rtabmap",
+                output="screen",
+                arguments=[
+                    "--delete_db_on_start",
+                ],
+                parameters=slam_parameters,
+            ),
+            launch_ros.actions.Node(
+                package="rtabmap_viz",
+                executable="rtabmap_viz",
+                output="screen",
+                parameters=slam_parameters,
+            ),
         ]
     )
