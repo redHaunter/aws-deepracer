@@ -1,4 +1,4 @@
-**Nav2 document**
+# Nav2 document
 
 Three main components of the Nav2 stack are planners, controllers, and recoveries. Planners and controllers are at the main parts of a navigation task. The task of a planner is to compute a path to complete an objective function. Controllers, also known as local planners in ROS 1, are the way the robot follows the globally computed path or completes a local task. The controller will have access to a local environment representation to attempt to compute feasible control efforts for the robot base to follow. The general task in Nav2 for a controller is to compute a valid control effort to follow the global plan. Recoveries are used to get the robot out of a bad situation or attempt to deal with various forms of issues to make the system fault-tolerant. The goal of recoveries are to deal with unknown or failure conditions of the system and autonomously handle them. To learn more about other components such as behavior trees, navigation servers, and action servers.
 
