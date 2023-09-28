@@ -44,7 +44,7 @@ By employing the `pointcloud_to_depthimage` package found within the `rtabmap_ut
 Detailed examples and step-by-step instructions are readily accessible on their webpage. Simply follow the prescribed steps for remapping the topics, and you should be able to successfully create the depth image.
 
 ## Utilizing Visual Tools for Odometry
-Same as the [Rtabmap SLAM part](https://github.com/redHaunter/aws-deepracer/tree/main/Visual_SLAM_Instructions_Sim.md#Creating-a-3D-Map) we switched to rgbd odometry calculation of Rtabmap.
+Same as the [Creating a 3D Map part](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Sim.md#creating-a-3d-map) we switched to rgbd odometry calculation of Rtabmap.
 The node wraps the RGBD odometry approach of RTAB-Map. Using RGBD images, odometry is computed using visual features extracted from the RGB images with their depth information from the depth images. Using the feature correspondences between the images, a RANSAC approach computes the transformation between the consecutive images.
 
 ## Creating a 3D Map

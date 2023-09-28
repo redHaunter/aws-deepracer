@@ -16,7 +16,7 @@ The camera node does detect the stereo camera installed on the robot and it just
 > The code can be found in [camera_pkg](https://github.com/redHaunter/aws-deepracer/blob/main/deepracer_nodes/aws-deepracer-camera-pkg/camera_pkg/src/camera_node.cpp)
 > 
 - **Camera Info**
-We have used cofig.yaml files of [Camera Calibration](https://github.com/redHaunter/aws-deepracer/tree/main/Visual_SLAM_Instructions_Device.md#Camera-Calibration) to publish `camera_info` topic of each camera within the use of `camera_calibration_parsers` library.
+We have used cofig.yaml files of [Camera Calibration](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Device.md#camera-calibration) to publish `camera_info` topic of each camera within the use of `camera_calibration_parsers` library.
 
 	> Time stamp of both cameras `image_raw` and `camera_info` needed to be set as same.
 
