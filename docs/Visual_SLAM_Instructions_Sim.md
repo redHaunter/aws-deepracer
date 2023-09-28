@@ -3,24 +3,26 @@
 ### This instruction offers guidance on configuring Visual SLAM (VSLAM) for DeepRacer within the simulation environment. 
 
 ## Overview
-When implementing Visual SLAM, it is imperative to select a robust ROS-integrated package for crafting a 3D map. In this documentation, we have chosen the [rtabmap package](http://wiki.ros.org/rtabmap_ros) for this crucial task. With the rtabmap package, we can effortlessly generate a 3D point cloud of the surrounding environment and a 2D occupancy grid map for streamlined navigation.
 
-This package boasts versatility by offering various approaches tailored to the available sensors and devices on the robot. Given that we are working with the Deepracer robot, we have access to a stereo camera and LiDAR sensors, which we can leverage effectively to construct our 3D map.
+When implementing Visual SLAM, selecting a robust ROS-integrated package for crafting a 3D map is crucial. In this documentation, we have chosen the [rtabmap package](http://wiki.ros.org/rtabmap_ros) for this important task. With the rtabmap package, we can effortlessly generate a 3D point cloud of the surrounding environment and a 2D occupancy grid map for streamlined navigation.
 
-In the subsequent sections of this documentation, we will delve into the 'Stereo a' approach, as outlined in the [official setup page](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot). By adopting this approach, we can generate depth images and, by meticulously employing the appropriate packages, ensure that the 'rtabmap' package produces the map data as originally planned.
+This package offers versatility by providing various approaches tailored to the available sensors and devices on the robot. Given that we are working with the Deepracer robot, we have access to stereo cameras and LiDAR sensors, which we can effectively leverage to construct our 3D map.
 
-Before proceeding to the subsequent sections of this documentation, it is essential to install the relevant packages mentioned on the linked page.
+In the subsequent sections of this documentation, we will explore the `Stereo A` approach, as outlined in the [official setup page](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot). By adopting this approach, we can generate depth images and, by carefully employing the appropriate packages, ensure that the `rtabmap` package produces the map data as originally planned.
+
+Before proceeding to the subsequent sections of this documentation, it is important to install the relevant packages mentioned on the linked page.
 
 ## Establishing Connections with Vision Processing Nodes
 In this section, we leverage the `stereo_image_proc` package to perform critical vision processing tasks, including the correction of distortion and colorization of raw images, all conducted on calibrated cameras. Furthermore, we calculate the disparity image using [OpenCV's block matching](https://docs.opencv.org/2.4/modules/calib3d/doc/camera_calibration_and_3d_reconstruction.html#stereobm) algorithms, enabling us to generate a point cloud using this node. Disparity image can be shown using the below command:
 
 	ros2 run image_view disparity_view image:=/disparity
 
-However, before diving into these tasks, it is imperative to modify some of the sensor names defined in the `deepracer_description/models/xacro/sensor/deepracer_gazebo_stereo_cameras.xacro` file. This adjustment is essential to ensure the accurate remapping of raw image and camera information topics.
+However, before diving into these tasks, it is crucial to modify some of the sensor names defined in the `deepracer_description/models/xacro/sensor/deepracer_gazebo_stereo_cameras.xacro` file. This adjustment is essential to ensure the accurate remapping of raw image and camera information topics.
 > `zed_camera_left_sensor` changed to `zed_camera/left`
 >  `zed_camera_right_sensor` changed to `zed_camera/right`
 
-As the URDF of the mentioned sensors is written in ROS1, we need to make changes to specific tag names in the aforementioned xacro file:
+  
+As the URDF of the mentioned sensors is written in ROS1, we need to make changes to specific tag names in the xacro file mentioned above:
 
 > `cameraName` changed to `camera_name`
 > `frameName` changed to `frame_name`

@@ -1,3 +1,5 @@
+calibration - rplidar node
+
 # Device
 
 ### This instruction explains how to setup the AWS DeepRacer robot and use open-source ROS-integrated packages to run Nav2 stack on the device.
@@ -86,7 +88,8 @@ By utilizing the package available on GitHub, we can clone the open-source packa
 	cd ~/deepracer_nav2_ws/aws-deepracer/deepracer_nodes/rplidar_ros && rosws update
 	cd ~/deepracer_nav2_ws/aws-deepracer/deepracer_nodes/aws-deepracer-camera-pkg && rosws update
 	```
-	Attention: An issue that has been highlighted on the [AWS DeepRacer GitHub issue page](https://github.com/aws-deepracer/aws-deepracer/issues/9) involves the modification of the package name from `rplidar_ros2` to `rplidar_ros` in the `deepracer.launch.py` file situated within the `deepracer_bringup` package. Prior to building the packages, ensure that you make this adjustment.
+	> **Important Note**: An issue that has been highlighted on the [AWS DeepRacer GitHub issue page](https://github.com/aws-deepracer/aws-deepracer/issues/9) involves the modification of the package name from `rplidar_ros2` to `rplidar_ros` in the `deepracer.launch.py` file situated within the `deepracer_bringup` package. Prior to building the packages, ensure that you make this adjustment.
+	>	Additionally, please note that the name of the `rplidar_node` has been changed from `rplidar_scan_publisher` to `rplidar_node` in recent developments. It is essential to update this name in the launch file to ensure proper functionality.
 	
 	In order to successfully build the packages, it is necessary to have certain `navigation2` and `nav2_bringup` packages installed. In the provided documentation, the use of `apt` for package installation is recommended, as it is considered the optimal and most reliable solution. However, in our situation, `apt` did not manage to identify the ideal version compatible with the appropriate ROS distribution for package installation. Consequently, we were required to manually clone and build these packages from the source, which can be found on the [navigation2 GitHub repository](https://github.com/ros-planning/navigation2).
 
@@ -110,14 +113,14 @@ In order to open RViz for viewing the generated map and navigate through it, it'
 	
 	*Server:*
 	```
-	ufw diable
+	ufw disable
 	export ROS_MASTER_URI=http://"self_ip:11311"
 	export ROS_HOSTNAME="self_ip"
 	expert ROS_DOMAIN_ID=5
 	```
 	*Client:*
 	```
-	ufw diable
+	ufw disable
 	export ROS_MASTER_URI=http://"host_ip:11311"
 	export ROS_HOSTNAME="self_ip"
 	expert ROS_DOMAIN_ID=5
@@ -164,12 +167,8 @@ To navigate through generated map, you should execute the following commands. En
 	Due to the limitations of Ackermann vehicles in performing pure rotations, and given that our robot employs Ackermann steering, it's crucial to modify two parameters in the `nav2_params_nav_amcl_dr_demo.yaml` file situated in the `deepracer_bringup` package. Specifically, the parameters `use_rotate_to_heading: false` and `allow_reversing: true` need to be adjusted. Once you've made these changes, ensure to rebuild the package to apply the modified values.
 
 	As the robot's speed may not be correctly configured, it's necessary to modify the relevant parameters in the `constants.py` file located in `cmdvel_to_servo_pkg` within the `deepracer_nodes` package. Below are the adjusted values:
-???
-???
-???
-???
-???
-After making these adjustments, remember to rebuild the package to ensure the changes take effect.
+
+	After making these adjustments, remember to rebuild the package to ensure the changes take effect.
 
 	*Launch the AWS DeepRacer robot related packages (vehicle)*
 	```
@@ -188,4 +187,3 @@ After making these adjustments, remember to rebuild the package to ensure the ch
 	ros2 run rviz2 rviz2
 	```
 	If the Navigation2 package was built in a different workspace, it's essential to source that workspace as well. 
-
