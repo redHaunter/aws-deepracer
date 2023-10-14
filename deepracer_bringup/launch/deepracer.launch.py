@@ -16,17 +16,27 @@
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 import launch_ros.actions
 
 
 def generate_launch_description():
+    camera_dir = get_package_share_directory("camera_pkg")
+    camera_launch = IncludeLaunchDescription(
+        launch_description_source=PythonLaunchDescriptionSource(
+            launch_file_path=camera_dir
+            + "/launch/camera_pkg_launch.py"
+        ),
+    )
     deepracer_bringup_dir = get_package_share_directory('deepracer_bringup')
     return LaunchDescription([
         launch_ros.actions.Node(
             package='tf2_ros',
             executable='static_transform_publisher',
             output='screen',
-            arguments=['0.136966', '0', '0.143272', '0', '0.2618', '0', 'base_link', 'camera_link'],
+            arguments=['0.136966', '0', '0.143272', '-1.5707963267948966',
+                       '0', '-1.5707963267948966', 'base_link', 'camera_link'],
             parameters=[
                 deepracer_bringup_dir + '/config/static_tf.yaml'
             ]
@@ -36,20 +46,13 @@ def generate_launch_description():
             package='tf2_ros',
             executable='static_transform_publisher',
             output='screen',
-            arguments=['0.02913', '0', '0.184699', '3.1416', '0', '0', 'base_link', 'laser_frame'],
+            arguments=['0.02913', '0', '0.184699', '3.1416',
+                       '0', '0', 'base_link', 'laser_frame'],
             parameters=[
                 deepracer_bringup_dir + '/config/static_tf.yaml']),
 
 
-        launch_ros.actions.Node(
-            package='camera_pkg',
-            namespace='camera_pkg',
-            executable='camera_node',
-            name='camera_node',
-            parameters=[
-                {'resize_images': True}
-            ]
-            ),
+        camera_launch,
 
         launch_ros.actions.Node(
             package='rplidar_ros',
@@ -62,37 +65,38 @@ def generate_launch_description():
                     'frame_id': 'laser_frame',
                     'inverted': False,
                     'angle_compensate': True,
-                }]
-                ),
+            }]
+        ),
 
         launch_ros.actions.Node(
             package='servo_pkg',
             namespace='servo_pkg',
             executable='servo_node',
             name='servo_node',
-            remappings=[('/ctrl_pkg/servo_msg', '/cmdvel_to_servo_pkg/servo_msg')]
-            ),
+            remappings=[
+                ('/ctrl_pkg/servo_msg', '/cmdvel_to_servo_pkg/servo_msg')]
+        ),
 
         launch_ros.actions.Node(
             package='cmdvel_to_servo_pkg',
             namespace='cmdvel_to_servo_pkg',
             executable='cmdvel_to_servo_node',
             name='cmdvel_to_servo_node'
-            ),
+        ),
 
         launch_ros.actions.Node(
             package='enable_deepracer_nav_pkg',
             namespace='enable_deepracer_nav_pkg',
             executable='enable_deepracer_nav_node',
             name='enable_deepracer_nav_node'
-            ),
+        ),
 
         launch_ros.actions.Node(
-                package='rf2o_laser_odometry',
-                executable='rf2o_laser_odometry_node',
-                name='rf2o_laser_odometry',
-                output='screen',
-                parameters=[{
+            package='rf2o_laser_odometry',
+            executable='rf2o_laser_odometry_node',
+            name='rf2o_laser_odometry',
+            output='screen',
+            parameters=[{
                     'laser_scan_topic': '/scan',
                     'odom_topic': '/odom',
                     'publish_tf': True,
@@ -100,6 +104,6 @@ def generate_launch_description():
                     'odom_frame_id': 'odom',
                     'init_pose_from_topic': '',
                     'freq': 20.0}],
-            )
+        )
 
     ])
