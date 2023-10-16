@@ -1,6 +1,6 @@
 ## Overview
 
-The AWS DeepRacer Evo vehicle is a 1/18th scale Wi-Fi enabled 4-wheel ackermann steering platform that features two RGB cameras and a LiDAR sensor. This repository contains the configuration and launch files to perform navigation, mapping and control vehicle using ROS2. For detailed information, see our [documents](https://github.com/redHaunter/aws-deepracer/tree/main/docs).
+The AWS DeepRacer Evo vehicle is a 1/18th scale Wi-Fi enabled 4-wheel ackermann steering platform that features two RGB cameras and a LiDAR sensor. This repository contains the configuration and launch files to do navigation, SLAM and control the vehicle using ROS2. For detailed information, see our [documents](https://github.com/redHaunter/aws-deepracer/tree/main/docs).
 ## Contents
 
 The AWS DeepRacer repository consists of the following packages:
