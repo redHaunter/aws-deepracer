@@ -112,13 +112,13 @@ def generate_launch_description():
                 output="screen",
             ),
             # stereo_image_proc_launcher,
-            launch_ros.actions.Node(
-                package="rtabmap_sync",
-                executable="stereo_sync",
-                output="screen",
-                parameters=stereo_parameters,
-                remappings=stereo_remmapings,
-            ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_sync",
+            #     executable="stereo_sync",
+            #     output="screen",
+            #     parameters=stereo_parameters,
+            #     remappings=stereo_remmapings,
+            # ),
             # launch_ros.actions.Node(
             #     package="rtabmap_util",
             #     executable="pointcloud_to_depthimage",
@@ -140,20 +140,20 @@ def generate_launch_description():
             #     parameters=odom_params,
             #     remappings=odom_remmapings,
             # ),
-            launch_ros.actions.Node(
-                package="rtabmap_slam",
-                executable="rtabmap",
-                output="screen",
-                arguments=[
-                    "--delete_db_on_start",
-                ],
-                parameters=slam_parameters,
-            ),
-            launch_ros.actions.Node(
-                package="rtabmap_viz",
-                executable="rtabmap_viz",
-                output="screen",
-                parameters=slam_parameters,
-            ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_slam",
+            #     executable="rtabmap",
+            #     output="screen",
+            #     arguments=[
+            #         "--delete_db_on_start",
+            #     ],
+            #     parameters=slam_parameters,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_viz",
+            #     executable="rtabmap_viz",
+            #     output="screen",
+            #     parameters=slam_parameters,
+            # ),
         ]
     )
