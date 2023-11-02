@@ -79,7 +79,9 @@ def generate_launch_description():
             "speckle_size": "1000",
         }.items(),
     )
-
+    image_view_params = [
+        ("image", "/disparity"),
+    ]
     stereo_image_proc_dir = get_package_share_directory("stereo_image_proc")
     stereo_image_proc_launcher = IncludeLaunchDescription(
         launch_description_source=PythonLaunchDescriptionSource(
@@ -87,31 +89,40 @@ def generate_launch_description():
             + "/launch/stereo_image_proc.launch.py"
         ),
         launch_arguments={
-            "approximate_sync": "False",
+            "approximate_sync": "True",
             "left_namespace": "/camera_pkg/left",
             "right_namespace": "/camera_pkg/right",
             "target_frame_id": "/camera_link",
             # "disparity_range": "32",
-            # "speckle_size": "1000",
+            # "prefilter_size": "0.0",
+            # "speckle_range": "2",
+            # "texture_threshold": "1000",
+            # "uniqueness_ratio": "0.0",
         }.items(),
     )
 
     return LaunchDescription(
         [
+            # launch_ros.actions.Node(
+            #     package="domain_bridge",
+            #     executable="domain_bridge",
+            #     output="screen",
+            #     arguments=[
+            #         "/home/redha/ros2_ws/src/domain_bridge/examples/example_bridge_config.yaml",
+            #     ],
+            # ),
+            # launch_ros.actions.Node(
+            #     package="decompressor",
+            #     executable="decompression_node",
+            #     output="screen",
+            # ),
+            stereo_image_proc_launcher,
             launch_ros.actions.Node(
-                package="domain_bridge",
-                executable="domain_bridge",
+                package="image_view",
+                executable="disparity_view",
                 output="screen",
-                arguments=[
-                    "/home/redha/ros2_ws/src/domain_bridge/examples/example_bridge_config.yaml",
-                ],
+                remappings=image_view_params,
             ),
-            launch_ros.actions.Node(
-                package="decompressor",
-                executable="decompression_node",
-                output="screen",
-            ),
-            # stereo_image_proc_launcher,
             # launch_ros.actions.Node(
             #     package="rtabmap_sync",
             #     executable="stereo_sync",

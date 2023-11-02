@@ -136,12 +136,12 @@ def generate_launch_description():
             #     parameters=slam_parameters,
             #     remappings=slam_remmapings,
             # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_viz",
-            #     executable="rtabmap_viz",
-            #     output="screen",
-            #     parameters=viz_parameters,
-            #     remappings=viz_remmapings,
-            # ),
+            launch_ros.actions.Node(
+                package="rtabmap_viz",
+                executable="rtabmap_viz",
+                output="screen",
+                parameters=viz_parameters,
+                remappings=viz_remmapings,
+            ),
         ]
     )

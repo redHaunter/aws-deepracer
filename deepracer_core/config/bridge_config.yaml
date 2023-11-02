@@ -1,0 +1,36 @@
+name: my_bridge
+from_domain: 5
+to_domain: 0
+topics:
+  camera_pkg/left/camera_info:
+    type: sensor_msgs/msg/CameraInfo
+
+  camera_pkg/left/compressed_image:
+    type: sensor_msgs/msg/CompressedImage
+
+  camera_pkg/right/camera_info:
+    type: sensor_msgs/msg/CameraInfo
+
+  camera_pkg/right/compressed_image:
+    type: sensor_msgs/msg/CompressedImage
+
+  cmd_vel:
+    type: geometry_msgs/msg/Twist
+  
+  cmdvel_to_servo_pkg/servo_msg:
+    type: deepracer_interfaces_pkg/msg/ServoCtrlMsg
+
+  ctrl_pkg/raw_pwm:
+    type: deepracer_interfaces_pkg/msg/ServoCtrlMsg
+
+  odom:
+    type: nav_msgs/msg/Odometry
+  
+  scan:
+    type: sensor_msgs/msg/LaserScan
+  
+  tf:
+    type: tf2_msgs/msg/TFMessage
+
+  tf_static:
+    type: tf2_msgs/msg/TFMessage

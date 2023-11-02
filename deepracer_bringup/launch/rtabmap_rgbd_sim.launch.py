@@ -87,27 +87,27 @@ def generate_launch_description():
                 parameters=[{"approx_sync": True}],
                 remappings=rgbd_sync_remmapings,
             ),
-            launch_ros.actions.Node(
-                package="rtabmap_odom",
-                executable="rgbd_odometry",
-                output="screen",
-                parameters=odom_params,
-                remappings=odom_remmapings,
-            ),
-            launch_ros.actions.Node(
-                package="rtabmap_slam",
-                executable="rtabmap",
-                output="screen",
-                arguments=[
-                    "--delete_db_on_start",
-                ],
-                parameters=slam_parameters,
-            ),
-            launch_ros.actions.Node(
-                package="rtabmap_viz",
-                executable="rtabmap_viz",
-                output="screen",
-                parameters=slam_parameters,
-            ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_odom",
+            #     executable="rgbd_odometry",
+            #     output="screen",
+            #     parameters=odom_params,
+            #     remappings=odom_remmapings,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_slam",
+            #     executable="rtabmap",
+            #     output="screen",
+            #     arguments=[
+            #         "--delete_db_on_start",
+            #     ],
+            #     parameters=slam_parameters,
+            # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_viz",
+            #     executable="rtabmap_viz",
+            #     output="screen",
+            #     parameters=slam_parameters,
+            # ),
         ]
     )
