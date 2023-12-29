@@ -76,7 +76,6 @@ controller_server:
       regulated_linear_scaling_min_radius: 0.9
       regulated_linear_scaling_min_speed: 0.25
       use_rotate_to_heading: false
-      allow_reversing: true
       rotate_to_heading_min_angle: 0.785
       max_angular_accel: 3.2
       cost_scaling_dist: 0.3
@@ -100,11 +99,7 @@ local_costmap:
       height: 3
       resolution: 0.05
       footprint: '[[0.085, 0.085], [0.085, -0.085], [-0.085, -0.085], [-0.085, 0.085]]'
-      # plugins: ["voxel_layer", "inflation_layer"]
-      plugins: ["voxel_layer", "gradient_layer"]
-      gradient_layer:
-        plugin: "nav2_gradient_costmap_plugin/GradientLayer"
-        enabled: True
+      plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 3.0
@@ -151,14 +146,7 @@ global_costmap:
       footprint: '[[0.085, 0.085], [0.085, -0.085], [-0.085, -0.085], [-0.085, 0.085]]'
       resolution: 0.05
       track_unknown_space: true
-      # plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
-      plugins: ["static_layer", "obstacle_layer", "gradient_layer"]
-      static_layer:
-        plugin: "nav2_costmap_2d::StaticLayer"
-        enabled: True
-      gradient_layer:
-        plugin: "nav2_gradient_costmap_plugin/GradientLayer"
-        enabled: True
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
         enabled: True
@@ -191,7 +179,7 @@ planner_server:
     use_sim_time: True
 
     GridBased:
-      plugin: "smac_planner/SmacPlanner"
+      plugin: "nav2_navfn_planner/NavfnPlanner"
       tolerance: 0.5                    # tolerance for planning if unable to reach exact pose, in meters, for 2D node
       downsample_costmap: false         # whether or not to downsample the map
       downsampling_factor: 1            # multiplier for the resolution of the costmap layer (e.g. 2 on a 5cm costmap would be 10cm)
@@ -321,4 +309,3 @@ map_server:
   ros__parameters:
     use_sim_time: True
     yaml_filename: map.yaml
-

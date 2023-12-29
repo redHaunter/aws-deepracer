@@ -80,13 +80,13 @@ def generate_launch_description():
                 parameters=depth_params,
                 remappings=depth_remmapings,
             ),
-            launch_ros.actions.Node(
-                package="rtabmap_sync",
-                executable="rgbd_sync",
-                output="screen",
-                parameters=[{"approx_sync": True}],
-                remappings=rgbd_sync_remmapings,
-            ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_sync",
+            #     executable="rgbd_sync",
+            #     output="screen",
+            #     parameters=[{"approx_sync": True}],
+            #     remappings=rgbd_sync_remmapings,
+            # ),
             # launch_ros.actions.Node(
             #     package="rtabmap_odom",
             #     executable="rgbd_odometry",

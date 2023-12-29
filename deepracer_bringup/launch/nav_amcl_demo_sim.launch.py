@@ -29,7 +29,7 @@ def generate_launch_description():
     # bookstore_path = get_package_share_directory('aws_robomaker_bookstore_world')
     bookstore_world = os.path.join("/home/redha/ros2_ws/src/aws-robomaker-bookstore-world", 'worlds', 'bookstore.world')
     bookstore_map = os.path.join("/home/redha/ros2_ws/src/aws-robomaker-bookstore-world", 'maps', 'turtlebot3_waffle_pi', 'map.yaml')
-    nav_params = os.path.join(deepracer_bringup_dir, 'config', 'voxel.yaml')
+    nav_params = os.path.join(deepracer_bringup_dir, 'config', 'nav2_params_nav_amcl_sim_demo.yaml')
 
     world_cfg = LaunchConfiguration('world')
     map_cfg = LaunchConfiguration('map')

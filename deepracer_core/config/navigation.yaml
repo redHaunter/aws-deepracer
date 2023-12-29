@@ -121,7 +121,7 @@ local_costmap:
         mark_threshold: 0
         observation_sources: image_raw
         image_raw:
-          topic: /iamge_raw
+          topic: /image_raw
           max_obstacle_height: 2.0
           clearing: True
           marking: True

@@ -4,7 +4,7 @@ from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 import launch_ros.actions
-
+from launch.actions import ExecuteProcess
 
 def generate_launch_description():
     slam_parameters = [
@@ -49,6 +49,14 @@ def generate_launch_description():
     slam_remmapings = [
         ("rgbd_image", "/rgbd_image"),
     ]
+    kinect_save = ExecuteProcess(
+        cmd=[
+            [
+                'ros2 bag record -o kinect_record_1 /camera_info /depth/camera_info /depth/image_raw /image_raw'
+            ]
+        ],
+        shell=True,
+    )
     return LaunchDescription(
         [
             launch_ros.actions.Node(
@@ -72,6 +80,7 @@ def generate_launch_description():
                 name="kinect_ros2_node",
                 output="screen",
             ),
+            kinect_save,
             launch_ros.actions.Node(
                 package="rtabmap_sync",
                 executable="rgbd_sync",

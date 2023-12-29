@@ -9,10 +9,11 @@ import launch_ros.actions
 def generate_launch_description():
     slam_parameters = [
         {
-            "use_sim_time": False,
+            "use_sim_time": True,
             "frame_id": "base_link",
             "subscribe_depth": False,
             "subscribe_rgbd": True,
+            "approx_sync": False,
             # "subscribe_scan": True,
             "RGBD/AngularUpdate": "0.01",
             "RGBD/LinearUpdate": "0.01",
@@ -41,7 +42,8 @@ def generate_launch_description():
     ]
     stereo_parameters = [
         {
-            "use_sim_time": False,
+            "use_sim_time": True,
+            "approx_sync": True,
         }
     ]
     rgbd_sync_remmapings = [
@@ -116,6 +118,13 @@ def generate_launch_description():
             #     executable="decompression_node",
             #     output="screen",
             # ),
+            # launch_ros.actions.Node(
+            #     package="rtabmap_sync",
+            #     executable="stereo_sync",
+            #     output="screen",
+            #     parameters=stereo_parameters,
+            #     remappings=stereo_remmapings,
+            # ),
             stereo_image_proc_launcher,
             launch_ros.actions.Node(
                 package="image_view",
@@ -124,25 +133,11 @@ def generate_launch_description():
                 remappings=image_view_params,
             ),
             # launch_ros.actions.Node(
-            #     package="rtabmap_sync",
-            #     executable="stereo_sync",
-            #     output="screen",
-            #     parameters=stereo_parameters,
-            #     remappings=stereo_remmapings,
-            # ),
-            # launch_ros.actions.Node(
             #     package="rtabmap_util",
             #     executable="pointcloud_to_depthimage",
             #     output="screen",
             #     parameters=depth_params,
             #     remappings=depth_remmapings,
-            # ),
-            # launch_ros.actions.Node(
-            #     package="rtabmap_sync",
-            #     executable="rgbd_sync",
-            #     output="screen",
-            #     parameters=[{"approx_sync": True}],
-            #     remappings=rgbd_sync_remmapings,
             # ),
             # launch_ros.actions.Node(
             #     package="rtabmap_odom",
