@@ -52,7 +52,7 @@ def generate_launch_description():
     kinect_save = ExecuteProcess(
         cmd=[
             [
-                'ros2 bag record -o kinect_record_1 /camera_info /depth/camera_info /depth/image_raw /image_raw'
+                'ros2 bag record /camera_info /depth/camera_info /depth/image_raw /image_raw /imu/data_raw /odom'
             ]
         ],
         shell=True,

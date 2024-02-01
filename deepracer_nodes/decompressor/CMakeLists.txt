@@ -12,6 +12,7 @@ find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(camera_calibration_parsers REQUIRED)
 
 # Add your package dependencies here
 # find_package(<dependency> REQUIRED)
@@ -31,6 +32,7 @@ ament_target_dependencies(decompression_node
   sensor_msgs
   cv_bridge
   OpenCV
+  camera_calibration_parsers
   # Add your dependencies here
   # <dependency>
 )

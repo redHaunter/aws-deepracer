@@ -12,7 +12,7 @@
 * **[deepracer_bringup](https://github.com/redHaunter/aws-deepracer/tree/main/deepracer_bringup):** Launch and configuration parameter files
 
 * **[deepracer_description](https://github.com/redHaunter/aws-deepracer/tree/main/deepracer_description):** URDF files for the AWS DeepRacer device
-
+>
 * **[deepracer_gazebo](https://github.com/redHaunter/aws-deepracer/tree/main/deepracer_gazebo):**  `deepracer_drive `plugin required to move the car in simulation
 
 * **[deepracer_nodes](https://github.com/redHaunter/aws-deepracer/tree/main/deepracer_nodes):** Set of nodes that are responsible for making the device compatible with the navigation and SLAM packages

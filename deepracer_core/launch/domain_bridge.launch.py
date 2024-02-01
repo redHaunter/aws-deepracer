@@ -14,9 +14,27 @@ def generate_launch_description():
         ],
         shell=True,
     )
+    # image_transport_1 = ExecuteProcess(
+    #     cmd=[
+    #         [
+    #             'ROS_DOMAIN_ID=5 ros2 run image_transport republish compressed raw --ros-args --remap in/compressed:=/camera_pkg/right/compressed --remap out:=/camera_pkg/right/image_raw'
+    #         ]
+    #     ],
+    #     shell=True,
+    # )
+    # image_transport_2 = ExecuteProcess(
+    #     cmd=[
+    #         [
+    #             'ROS_DOMAIN_ID=5 ros2 run image_transport republish compressed raw --ros-args --remap in/compressed:=/camera_pkg/left/compressed --remap out:=/camera_pkg/left/image_raw'
+    #         ]
+    #     ],
+    #     shell=True,
+    # )
     return LaunchDescription(
         [
             camera_service,
+            # image_transport_1,
+            # image_transport_2,
             launch_ros.actions.Node(
                 package="domain_bridge",
                 executable="domain_bridge",

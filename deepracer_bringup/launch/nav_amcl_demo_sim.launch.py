@@ -21,6 +21,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
+import launch_ros.actions
+
 
 # demo of deepracer simulation in aws bookstore world with navigation and amcl
 def generate_launch_description():
@@ -38,16 +40,49 @@ def generate_launch_description():
     declare_world_arg = DeclareLaunchArgument('world', default_value=bookstore_world, description='SDF world file')
     declare_map_arg = DeclareLaunchArgument('map', default_value=bookstore_map, description='map file')
     declare_params_arg = DeclareLaunchArgument('params', default_value=nav_params, description='params file')
-    
+    depth_remmapings = [
+        ("depth", "/image_raw"),
+        ("depth_camera_info", "/zed_camera/left/camera_info"),
+        ("scan", "/test/scan"),
+    ]
     include_files = GroupAction([
         # start deepracer simulation
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([deepracer_bringup_dir, '/launch/deepracer_sim.launch.py']),
             launch_arguments = {'world': world_cfg}.items()
-         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([deepracer_bringup_dir, '/launch/rtabmap_rgbd_sim.launch.py'])
-         ),
+        ),
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource([deepracer_bringup_dir, '/launch/rtabmap_rgbd_sim.launch.py'])
+        # ),
+        # launch_ros.actions.Node(
+        #     package="depthimage_to_laserscan",
+        #     executable="depthimage_to_laserscan_node",
+        #     output="screen",
+        #     parameters=[
+        #     {'use_sim_time': True},
+        #     {'range_min': 0.15},
+        #     {'range_max': 10.0}, #10.0
+        #     {'scan_height': 479},
+        #     {'output_frame': 'fakelaser'}
+        #     ],
+        #     remappings=depth_remmapings,
+        # ),
+        launch_ros.actions.Node(
+                package="tf2_ros",
+                executable="static_transform_publisher",
+                output="screen",
+                arguments=[
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "base_link",
+                    "fakelaser",
+                ],
+                parameters=[deepracer_bringup_dir + "/config/static_tf.yaml"],
+            ),
         # start navigation planner and controller
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource([deepracer_bringup_dir, '/launch/deepracer_navigation_sim.launch.py']),

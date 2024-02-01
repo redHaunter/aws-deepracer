@@ -19,6 +19,7 @@ limitations under the License.
   <xacro:arg name="agent_name" default="agent" />
   <!-- Default: Use front facing camera and LiDAR sensor -->
   <xacro:arg name="sensor_type" default="stereo_cameras_and_lidar" />
+  <!-- <xacro:arg name="sensor_type" default="stereo_cameras" /> -->
   <xacro:arg name="shell" default="deepracer.STL" />
   <xacro:arg name="agent_bitmask" default="0x01" />
   <xacro:arg name="shell_joint_origin_x" default="-0.0762" />
@@ -67,5 +68,8 @@ limitations under the License.
     <xacro:include filename="$(find deepracer_description)/models/xacro/sensor/deepracer_gazebo_stereo_cameras.xacro" />
   </xacro:if>
 
-  <xacro:include filename="$(find deepracer_description)/models/xacro/sensor/deepracer_gazebo_lidar.xacro" />
+  <xacro:if value="${'lidar' in sensor_type_val}">
+    <xacro:include filename="$(find deepracer_description)/models/xacro/sensor/deepracer_gazebo_lidar.xacro" />
+  </xacro:if>
+  
 </robot>
