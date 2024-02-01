@@ -36,7 +36,7 @@ public:
         cameraInfoPub_2 = this->create_publisher<sensor_msgs::msg::CameraInfo>("/camera_pkg/right/camera_info", 10);
     }
 
-private:/camera_pkg/left/image_raw
+private:
     void publish_raw_data_left(const sensor_msgs::msg::CompressedImage::SharedPtr msg)
     {
         cv_bridge::CvImagePtr cv_image_ptr;
