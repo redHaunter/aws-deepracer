@@ -19,3 +19,6 @@ topics:
 
   tf_static:
     type: tf2_msgs/msg/TFMessage
+
+  imu/data_raw:
+    type: sensor_msgs/msg/Imu

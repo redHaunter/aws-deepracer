@@ -43,9 +43,14 @@ def generate_launch_description():
                     domain_bridge_dir + "/config/bridge_config.yaml",
                 ],
             ),
+            # launch_ros.actions.Node(
+            #     package="decompressor",
+            #     executable="decompression_node",
+            #     output="screen",
+            # ),
             launch_ros.actions.Node(
                 package="decompressor",
-                executable="decompression_node",
+                executable="resize_decompression_node",
                 output="screen",
             ),
         ]
