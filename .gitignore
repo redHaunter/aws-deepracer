@@ -3,3 +3,5 @@ build
 install
 log
 deepracer_nodes/image_crop
+aws-deepracer-camera-pkg
+aws-deepracer-servo-pkg
