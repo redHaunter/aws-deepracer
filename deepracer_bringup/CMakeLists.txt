@@ -36,7 +36,7 @@ set(dependencies
   tf2
 )
 
-install(DIRECTORY launch config
+install(DIRECTORY launch config rtabmap
   DESTINATION share/${PROJECT_NAME}
 )
 

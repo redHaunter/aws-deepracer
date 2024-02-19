@@ -99,7 +99,7 @@ local_costmap:
       height: 3
       resolution: 0.05
       footprint: '[[0.085, 0.085], [0.085, -0.085], [-0.085, -0.085], [-0.085, 0.085]]'
-      plugins: ["voxel_layer", "inflation_layer"]0=[]
+      plugins: ["voxel_layer", "inflation_layer"]
       # obstacle_layer:
       #   plugin: "nav2_costmap_2d::ObstacleLayer"
       #   enabled: True
