@@ -30,6 +30,11 @@ def generate_launch_description():
     #     ],
     #     shell=True,
     # )
+    decompressor_parameters = [
+        {
+            "publish_rgb": False,
+        }
+    ]
     return LaunchDescription(
         [
             camera_service,
@@ -43,15 +48,16 @@ def generate_launch_description():
                     domain_bridge_dir + "/config/bridge_config.yaml",
                 ],
             ),
-            # launch_ros.actions.Node(
-            #     package="decompressor",
-            #     executable="decompression_node",
-            #     output="screen",
-            # ),
             launch_ros.actions.Node(
                 package="decompressor",
-                executable="resize_decompression_node",
+                executable="decompression_node",
+                parameters=decompressor_parameters,
                 output="screen",
             ),
+            # launch_ros.actions.Node(
+            #     package="decompressor",
+            #     executable="resize_decompression_node",
+            #     output="screen",
+            # ),
         ]
     )

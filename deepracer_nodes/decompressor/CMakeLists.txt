@@ -18,16 +18,16 @@ find_package(camera_calibration_parsers REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 # Create an executable for your node
-add_executable(resize_decompression_node src/decompressor_resized.cpp)
+add_executable(decompression_node src/decompressor.cpp)
 
 # Include directories for the executable
-target_include_directories(resize_decompression_node
+target_include_directories(decompression_node
   PRIVATE
   ${OpenCV_INCLUDE_DIRS}
 )
 
 # Link your executable with ROS 2 libraries
-ament_target_dependencies(resize_decompression_node
+ament_target_dependencies(decompression_node
   rclcpp
   sensor_msgs
   cv_bridge
@@ -39,7 +39,7 @@ ament_target_dependencies(resize_decompression_node
 
 # Install the executable
 install(TARGETS
-  resize_decompression_node
+  decompression_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
