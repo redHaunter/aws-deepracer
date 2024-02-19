@@ -4,7 +4,7 @@
 
 ## Overview
 
-When implementing Visual SLAM, selecting a robust ROS-integrated package for crafting a 3D map is crucial. In this documentation, we have chosen the [rtabmap package](http://wiki.ros.org/rtabmap_ros) for this important task. With the rtabmap package, we can effortlessly generate a 3D point cloud of the surrounding environment and a 2D occupancy grid map for streamlined navigation.
+When implementing Visual SLAM, selecting a robust ROS-integrated package for crafting a 3D map is crucial. In this documentation, we have chosen the [rtabmap package](http://wiki.ros.org/rtabmap_ros) for this important task. With the rtabmap package, we can generate a 3D point cloud of the surrounding environment and a 2D occupancy grid map for streamlined navigation.
 
 This package offers versatility by providing various approaches tailored to the available sensors and devices on the robot. Given that we are working with the Deepracer robot, we have access to stereo cameras and LiDAR sensors, which we can effectively leverage to construct our 3D map.
 
@@ -44,12 +44,12 @@ By employing the `pointcloud_to_depthimage` package found within the `rtabmap_ut
 Detailed examples and step-by-step instructions are readily accessible on their webpage. Simply follow the prescribed steps for remapping the topics, and you should be able to successfully create the depth image.
 
 ## Utilizing Visual Tools for Odometry
-Same as the [Creating a 3D Map part](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Sim.md#creating-a-3d-map) we switched to rgbd odometry calculation of Rtabmap.
-The node wraps the RGBD odometry approach of RTAB-Map. Using RGBD images, odometry is computed using visual features extracted from the RGB images with their depth information from the depth images. Using the feature correspondences between the images, a RANSAC approach computes the transformation between the consecutive images.
+Similar to [Creating a 3D Map part](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Sim.md#creating-a-3d-map) we have utilized the RGB-D images to calculate the robot's odometry using built-in RTAB-Map packages.
+Using RGBD images, odometry is computed using visual features extracted from the RGB images with their depth information from the depth images. Using the feature correspondences between the images, a RANSAC approach, Perspective-n-Points (PnP), computes the transformation between the consecutive images.
 
 ## Creating a 3D Map
-Refering to [rtabmap setup page ](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot#A2D_laser_only) we have used the stereo SLAM setup for our robot within the nodes we brought up in previous parts, but due to some problems the SLAM didn't work.
-The problem was that the projection matrix of stereo cameras was not properly set
+Refering to [rtabmap setup page ](http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot#A2D_laser_only) we have used both stereo and RGB-D SLAM approaches.
+The only problem we faced was that the projection matrix of stereo cameras was not properly set
 
 >Projection/camera matrix
 $$ P = \begin{bmatrix} fx' & 0 & cx' & Tx \\ 0 & fy' & cy' & Ty \\ 0 & 0 & 1 & 0 \end{bmatrix} $$
@@ -62,12 +62,8 @@ $$ P = \begin{bmatrix} fx' & 0 & cx' & Tx \\ 0 & fy' & cy' & Ty \\ 0 & 0 & 1 & 0
 	    -   Compute [u v w] = P * [X Y Z 1]'
 	    -   Calculate x = u / w and y = v / w for both stereo images.
 
-And because the cameras was launched through gazebo plugins in a simulator, we didn't have the required access to change the disparity matrix of them separately (which was needed to be generated through calibrations of cameras).
-> Set_camera_info ROS service was same for both cameras and there was no individual access
+And because the cameras was launched through gazebo plugins in a simulator, we didn't have the required access to change the cameras' matrix separately (which was needed to be generated through calibrations of cameras).
+> Set_camera_info ROS service was same for both cameras and there was no individual access also it was difficult to do calibration in simulation
 
-So we simply used the alternative solution and setup the rgbd Rtabmap, required nodes to use the SLAM are:
-- `depth` data from `disparity node`
-- `left_camera_image_rect_color`from `stereo_image_proc node`
--  `left_camera_info`
 
 > Launch files of different SLAM setups can be found in **[deepracer_bringup](https://github.com/redHaunter/aws-deepracer/tree/main/deepracer_bringup)**
