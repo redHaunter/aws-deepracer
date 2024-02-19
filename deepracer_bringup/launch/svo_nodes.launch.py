@@ -22,6 +22,7 @@ import launch_ros.actions
 
 
 def generate_launch_description():
+    deepracer_bringup_dir = get_package_share_directory('deepracer_bringup')
     camera_dir = get_package_share_directory("camera_pkg")
     camera_launch = IncludeLaunchDescription(
         launch_description_source=PythonLaunchDescriptionSource(
@@ -38,6 +39,26 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='screen',
+            arguments=['0.136966', '0', '0.143272', '-1.5707963267948966',
+                       '0', '-1.5707963267948966', 'base_link', 'camera_link_left'],
+            parameters=[
+                deepracer_bringup_dir + '/config/static_tf.yaml'
+            ]
+        ),
+        launch_ros.actions.Node(
+            package='tf2_ros',
+            executable='static_transform_publisher',
+            output='screen',
+            arguments=['0.06', '0', '0', '0',
+                       '0', '0', 'camera_link_left', 'camera_link_right'],
+            parameters=[
+                deepracer_bringup_dir + '/config/static_tf.yaml'
+            ]
+        ),
         camera_launch,
         imu_launch,
     ])
