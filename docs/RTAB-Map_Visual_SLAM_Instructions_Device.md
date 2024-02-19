@@ -3,27 +3,27 @@
 ### This instruction provides guidance on configuring Visual SLAM (VSLAM) for DeepRacer and deploying it on the robot.
 
 ## Overview
-Setting up VSLAM on the robot can be a complex task, but with the assistance of the `rtabmap` package and the knowledge gained from our simulation experiences, we can successfully configure it to generate a 3D map.
+Setting up VSLAM on the robot can be a complex task, but with the assistance of the `RTAB-Map` package and the knowledge gained from our simulation experiences, we can successfully configure it to generate a 3D map.
 
 As the robot plays a crucial role in this process, there is a need to install certain packages on the robot itself. The subsequent steps will clarify the process of installing these packages.
 
-Additionally, as outlined in the device setup, the connection between the robot and your computer is established via a local network using SSH. It is essential that both the robot and the computer are connected to the same network. Furthermore, during the execution of the following steps, ensure that both cameras and the LiDAR are properly connected to the robot, and that the vehicle's battery is turned on.
+Additionally, as outlined in the device setup, the connection between the robot and your computer is established via a local network using SSH. It is essential that both the robot and the computer are connected to the same network. Furthermore, during the execution of the following steps, ensure that both cameras and the LiDAR are properly connected to the robot.
 
 ## publishing camera related topics
 
-To use cameras properly in ROS, it is required that image and camera info data be published in ROS.
-The camera node does detect the stereo camera installed on the robot and it just publishes `dispaly` and `video` topic to ROS. The camera nodes we need are `image_raw` and `camera_info` so we changed the source code of `camera_pkg` library to have topics that publish two cameras' data separately.
-> The code can be found in [camera_pkg](https://github.com/redHaunter/aws-deepracer/blob/main/deepracer_nodes/aws-deepracer-camera-pkg/camera_pkg/src/camera_node.cpp)
-> 
+To use cameras properly in ROS, it is essential that images and their camera info data are publishing in ROS within the same timestamps.
+We have modified the camera_node to only publish the compressed data of each camera's in jpeg format in  `compressed_image` topics seperately.
+> The code can be found in [camera_pkg](https://github.com/redHaunter/aws-deepracer/blob/robot/deepracer_nodes/camera_pkg/src/camera_node.cpp)
+Then in [decompressor](https://github.com/redHaunter/aws-deepracer/blob/main/deepracer_nodes/decompressor/src/decompressor.cpp) code we decompress the jpeg images to raw data and publish in our ROS-machine in `image_raw` topic. This will prevents the network overload.
 - **Camera Info**
-We have used cofig.yaml files of [Camera Calibration](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Device.md#camera-calibration) to publish `camera_info` topic of each camera within the use of `camera_calibration_parsers` library.
+We publish our camera info topics calibrated with [Camera Calibration](https://github.com/redHaunter/aws-deepracer/blob/main/docs/Visual_SLAM_Instructions_Device.md#camera-calibration) in the [decompressor](https://github.com/redHaunter/aws-deepracer/blob/main/deepracer_nodes/decompressor/src/decompressor.cpp) in `camera_info` topic using the `camera_calibration_parsers` library.
 
 	> Time stamp of both cameras `image_raw` and `camera_info` needed to be set as same.
 
 - **Network Overload**
 The main core of the robot is not proper for image processing tasks so we decided to send data over ROS network and then use it on our own ROS machines.
-Robot cameras capture 640x480 resolution images at 30 frames per second, by a simple calculation we can see that the stereo camera has 27MB/s data to publish which compared to our network card with 7.25MB/s bandwidth is a lot of overload. For that, we have done an image compression to `jpeg` format by using `OpenCV` library to lower the size of the image and prevent the network's overload.
-	> jpeg quality of 50 has been used which can be change in `camera_pkg` launch file.
+Robot cameras capture 640x480 resolution images at 30 frames per second, by a simple calculation we can see that the stereo camera has 55MB/s data to publish which compared to our network card with 22.5MB/s bandwidth is a lot of overload. For that, we have done an image compression to `jpeg` format by using `OpenCV` library to lower the size of the image and prevent the network's overload.
+	> jpeg quality of 90 has been used which can be change in `camera_pkg` launch file.
 
 - **ROS Domain Bridge**
 We also separated the `ROS_DOMAIN_ID`of the environment that is integrated with publishing and receiving camera data from the environment that is integrated with processing images inside our ROS machine by using [ROS-domain-bridge](https://github.com/ros2/domain_bridge) library. By that, we make sure that there are no more network overloads.
