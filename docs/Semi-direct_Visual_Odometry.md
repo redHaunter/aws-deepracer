@@ -1,21 +1,23 @@
 
 # Semi-Direct Visual Odometry (SVO)
 
-The algorithm is called after the way that it process and models the environment, considering high intensity edges (direct methods) while leveraging on extracted features from known algorithms like SURF (feature-based methods).
-The algorithm can be used with multiple cameras, various camera types and distortions, also it can be used with Inertial Measurement Unit (IMU) to simultaneously perform sparse mapping of the environment and calculating the base odometry in two different threads (SLAM).
+The algorithm is named after the way it processes and models the environment. It considers high-intensity edges (known as direct methods) while also utilizing extracted features from algorithms like SURF (known as feature-based methods). 
+The algorithm is flexible and can work with multiple camera types, various camera distortions, and even an Inertial Measurement Unit (IMU) to perform simultaneous sparse mapping of the environment and calculate base odometry in two different threads (SLAM).
 ## Sparse Image Alignment, Relaxation and Refinement
 - Estimate frame-to-frame motion by minimizing the photometric error (minimizing the intensity difference of same 3D points) of features lying on intensity corners and edges.
-- 3D points corresponding to features are obtained from the robust recursive Bayesian depth estimator
-- Bundle adjustment for refinement of the structure and the camera poses (non-linear least-squares problem)
+- The robust recursive Bayesian depth estimator obtains 3D points corresponding to features.
+- Bundle adjustment for refinement of the structure and the camera poses (non-linear least-squares problem).
 	■ Relaxation and Refinement
 
 # Device Flow Instructions
 
-First, you have to setup the ros1_bridge from [ROS2to1-bridge](https://github.com/redHaunter/ROS2to1-bridge/tree/main).
+First, you must ensure that cameras and IMU topics are published in ROS Noetic using the ROS1 bridge. Refer to [ROS2to1-bridge](https://github.com/redHaunter/ROS2to1-bridge/tree/main).
 
-Clone the package from [rpg_svo_pro_open](https://github.com/uzh-rpg/rpg_svo_pro_open). Then, in dependencies.yaml file replace "git@" with "https://", the previous one is deprecated. Now you can build the package following the instructions provided in the package's repository.
+Clone the package from [rpg_svo_pro_open](https://github.com/uzh-rpg/rpg_svo_pro_open). Then, in the dependencies.yaml file, replace "git@" with "https://". The previous one is deprecated. Now, you can build the package following the instructions provided in the package's repository.
 
-Then you have to calibrate your sensors, in our case, stereo cameras and stereo cameras with the IMU, so you can use the SVO pro porperly. Find required steps for camera and IMU calibration in [kalibr](https://github.com/ethz-asl/kalibr). Here is our calibration output:
+Then you need to calibrate your sensors, which in our case are stereo cameras and stereo cameras with the IMU. This will allow you to use the SVO pro properly. You can find the required steps for camera and IMU calibration in [kalibr](https://github.com/ethz-asl/kalibr). 
+
+Here is the output of our calibration process:
 
 ```
 cameras:
