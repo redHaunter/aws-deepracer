@@ -11,7 +11,7 @@ First, you have to setup the ros1_bridge from [here](https://github.com/redHaunt
 
 Clone the package from [here](https://github.com/uzh-rpg/rpg_svo_pro_open). Then, in dependencies.yaml file replace "git@" with "https://", the previous one is deprecated. Now you can build the package following the instructions provided in the package's repository.
 
-Finally you have to calibrate your sensors, in our case, stereo cameras and stereo cameras with the IMU, so you can use the SVO pro porperly. Find require steps for camera and IMU calibration [here](https://github.com/ethz-asl/kalibr). Here is our calibration output:
+Then you have to calibrate your sensors, in our case, stereo cameras and stereo cameras with the IMU, so you can use the SVO pro porperly. Find require steps for camera and IMU calibration [here](https://github.com/ethz-asl/kalibr). Here is our calibration output:
 
 ```
 cameras:
@@ -90,3 +90,8 @@ imu_initialization:
   velocity: [0.0, 0.0, 0.0]
   velocity_sigma: 1.0
 ```
+
+
+Finally you can use this calibaraion file in yaml format similar to the one used in the package's launch files.
+
+> just be sure that bridged topic from ROS2 to ROS1 are working properly
