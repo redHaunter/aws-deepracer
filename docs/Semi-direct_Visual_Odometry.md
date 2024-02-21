@@ -11,7 +11,7 @@ First, you have to setup the ros1_bridge from [ROS2to1-bridge](https://github.co
 
 Clone the package from [rpg_svo_pro_open](https://github.com/uzh-rpg/rpg_svo_pro_open). Then, in dependencies.yaml file replace "git@" with "https://", the previous one is deprecated. Now you can build the package following the instructions provided in the package's repository.
 
-Then you have to calibrate your sensors, in our case, stereo cameras and stereo cameras with the IMU, so you can use the SVO pro porperly. Find require steps for camera and IMU calibration [kalibr](https://github.com/ethz-asl/kalibr). Here is our calibration output:
+Then you have to calibrate your sensors, in our case, stereo cameras and stereo cameras with the IMU, so you can use the SVO pro porperly. Find required steps for camera and IMU calibration in [kalibr](https://github.com/ethz-asl/kalibr). Here is our calibration output:
 
 ```
 cameras:
