@@ -1,9 +1,13 @@
+
 # Semi-Direct Visual Odometry (SVO)
 
-## SLAM Methods
-
+The algorithm is called after the way that it process and models the environment, considering high intensity edges (direct methods) while leveraging on extracted features from known algorithms like SURF (feature-based methods).
+The algorithm can be used with multiple cameras, various camera types and distortions, also it can be used with Inertial Measurement Unit (IMU) to simultaneously perform sparse mapping of the environment and calculating the base odometry in two different threads (SLAM).
 ## Sparse Image Alignment, Relaxation and Refinement
-
+- Estimate frame-to-frame motion by minimizing the photometric error (minimizing the intensity difference of same 3D points) of features lying on intensity corners and edges.
+- 3D points corresponding to features are obtained from the robust recursive Bayesian depth estimator
+- Bundle adjustment for refinement of the structure and the camera poses (non-linear least-squares problem)
+	■ Relaxation and Refinement
 
 # Device Flow Instructions
 
