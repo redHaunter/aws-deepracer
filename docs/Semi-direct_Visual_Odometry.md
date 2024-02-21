@@ -2,7 +2,11 @@
 # Semi-Direct Visual Odometry (SVO)
 
 The algorithm is named after the way it processes and models the environment. It considers high-intensity edges (known as direct methods) while also utilizing extracted features from algorithms like SURF (known as feature-based methods). 
+
 The algorithm is flexible and can work with multiple camera types, various camera distortions, and even an Inertial Measurement Unit (IMU) to perform simultaneous sparse mapping of the environment and calculate base odometry in two different threads (SLAM).
+
+Odometry can be achieved with both visual and visual-inertial (fusion of stereo cameras and the IMU data) methods.
+
 ## Sparse Image Alignment, Relaxation and Refinement
 - Estimate frame-to-frame motion by minimizing the photometric error (minimizing the intensity difference of same 3D points) of features lying on intensity corners and edges.
 - The robust recursive Bayesian depth estimator obtains 3D points corresponding to features.
@@ -101,3 +105,14 @@ imu_initialization:
 Finally you can use this calibaraion file in yaml format similar to the one used in the package's launch files.
 
 > just be sure that bridged topics from ROS2 to ROS1 are working properly
+
+For instance, you can customize the [euroc_stereo_frontend_imu](https://github.com/uzh-rpg/rpg_svo_pro_open/blob/master/svo_ros/launch/frontend/euroc_stereo_frontend_imu.launch "euroc_stereo_frontend_imu.launch") launch file replacing your own calibration file for the cameras and IMU.
+> Remember to build the package after, and note that a network connection is required for building it.
+
+ After, just simply source and launch the package:
+```
+cd path_to_svo_repo
+source devel/setup.bash
+roslaunch svo_ros euroc_stereo_frontend_imu.launch
+```
+> This launch file uses the SVO algorithm to SLAM with only stereo cameras; more detail can be found in the SVO pro repository.
